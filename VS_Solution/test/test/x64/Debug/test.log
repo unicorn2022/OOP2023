@@ -1,0 +1,6 @@
+﻿  test.cpp
+E:\[参加活动]\2023--2024 大四\OOP朋辈辅学\VS_Solution\test\test\test.cpp(9,12): warning C4477: “printf”: 格式字符串“%x”需要类型“unsigned int”的参数，但可变参数 1 拥有了类型“const int *”
+E:\[参加活动]\2023--2024 大四\OOP朋辈辅学\VS_Solution\test\test\test.cpp(9,12): warning C4313: "printf": 格式字符串中的 "%x" 与类型为 "const int *" 的参数 1 冲突
+E:\[参加活动]\2023--2024 大四\OOP朋辈辅学\VS_Solution\test\test\test.cpp(10,12): warning C4477: “printf”: 格式字符串“%x”需要类型“unsigned int”的参数，但可变参数 1 拥有了类型“int *”
+E:\[参加活动]\2023--2024 大四\OOP朋辈辅学\VS_Solution\test\test\test.cpp(10,12): warning C4313: "printf": 格式字符串中的 "%x" 与类型为 "int *" 的参数 1 冲突
+  test.vcxproj -> E:\[参加活动]\2023--2024 大四\OOP朋辈辅学\VS_Solution\test\x64\Debug\test.exe
