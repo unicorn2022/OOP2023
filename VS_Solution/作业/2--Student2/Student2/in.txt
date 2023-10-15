@@ -1,0 +1,26 @@
+1 course1
+2 course2
+3 course3
+4 course4
+5 course5
+6 course6
+-1
+1 student1
+1 50
+2 60
+3 70
+4 10
+-1
+2 student2
+1 70
+3 80
+5 10
+6 60
+-1
+3 student3
+2 70
+4 80
+5 90
+6 10
+-1
+-1
