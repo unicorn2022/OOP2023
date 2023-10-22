@@ -31,7 +31,7 @@ int main(){
 }
 ```
 
-<img src="H:\Temp\Typora\image-20220402091521142.png" alt="image-20220402091521142" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120055217.png" alt="image-20231022120055217" style="zoom:80%;" />
 
 ### 7.1.1	向上转换 Upcast
 
@@ -48,13 +48,13 @@ ep->print( cout );	//调用的是父类的print函数
 
 ### 1	具体对象、共有数据、接口
 
-<img src="H:\Temp\Typora\image-20220402092312034.png" alt="image-20220402092312034" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120101317.png" alt="image-20231022120101317" style="zoom:80%;" />
 
 ### 2	继承结构
 
-<img src="H:\Temp\Typora\image-20220402092411930.png" alt="image-20220402092411930" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120106675.png" alt="image-20231022120106675" style="zoom:80%;" />
 
-<img src="H:\Temp\Typora\image-20220402092743972.png" alt="image-20220402092743972" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120114027.png" alt="image-20231022120114027" style="zoom:80%;" />
 
 1.   在父类**Shape**中，定义了接口**render()**
 
@@ -210,13 +210,13 @@ public:
 
 (4)子类的虚函数表中，不会有父类的虚函数表，因为子类已经将所有虚函数重新定义了
 
-<img src="H:\Temp\Typora\image-20220411091753157.png" alt="image-20220411091753157" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120129912.png" alt="image-20231022120129912" style="zoom:80%;" />
 
-<img src="H:\Temp\Typora\image-20220411091803213.png" alt="image-20220411091803213" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120137474.png" alt="image-20231022120137474" style="zoom:80%;" />
 
-<img src="H:\Temp\Typora\image-20220411091812438.png" alt="image-20220411091812438" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120143345.png" alt="image-20231022120143345" style="zoom:80%;" />
 
-<img src="H:\Temp\Typora\image-20220411091827604.png" alt="image-20220411091827604" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120148755.png" alt="image-20231022120148755" style="zoom:80%;" />
 
 ## 7.5	赋值与upcast
 

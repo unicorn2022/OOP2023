@@ -1,13 +1,24 @@
 ﻿#include <iostream>
 #include <string>
+#include <memory>
 using namespace std;
 
+class Student {
+    int id;
+    string name;
+public:
+    Student(int id, string name) : id(id), name(name) {}
+	~Student() { cout << "Student " << id << " is destructed." << endl; }
+};
+
 int main() {
-    const int x = 10;
-    int* y = const_cast<int*>(&x);
-    // 此处只能修改*y的值, 无法修改x的值, 因为在C++中修改一个const变量，如x，通过解引用const_cast得到的指针是未定义行为
-    *y = 20;
-    printf("%x  %d\n", &x, x);
-    printf("%x  %d\n", y, *y);  
+    shared_ptr<Student> p = make_shared<Student>(1, "s1");
+    shared_ptr<Student> p1 = p;
+    printf("p:%d p1:%d\n", p.use_count(), p1.use_count());
+    shared_ptr<Student> p2 = p;
+    printf("p:%d p1:%d p2:%d\n", p.use_count(), p1.use_count(), p2.use_count());
+    p = make_shared<Student>(2, "s1");
+    printf("p:%d p1:%d p2:%d\n", p.use_count(), p1.use_count(), p2.use_count());
+
     return 0;
 }

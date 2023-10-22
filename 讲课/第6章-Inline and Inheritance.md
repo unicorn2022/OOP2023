@@ -18,7 +18,7 @@
 
 将短函数转化为类似宏定义，在调用处将函数展开，如下图
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328082108937.png" alt="image-20220328082108937" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022115907924.png" alt="image-20231022115907924" style="zoom:80%;" />
 
 ### 6.1.3	inline的使用注意
 
@@ -99,11 +99,11 @@ account.m_saver.set_name("Fred");
 
 ​	(4)可扩展 **Extendibility**
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328085452298.png" alt="image-20220328085452298" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022115921026.png" alt="image-20231022115921026" style="zoom:80%;" />
 
 ### 6.3.2	继承的表示方法
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328092902625.png" alt="image-20220328092902625" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022115927729.png" alt="image-20231022115927729" style="zoom:80%;" />
 
 ### 6.3.2	c++中的作用域和访问
 
@@ -111,7 +111,7 @@ account.m_saver.set_name("Fred");
 
 ​	(2)子类可见，用户不可见：**protected**
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328092945059.png" alt="image-20220328092945059" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022115936242.png" alt="image-20231022115936242" style="zoom:80%;" />
 
 
 
@@ -121,23 +121,21 @@ account.m_saver.set_name("Fred");
 
 ### 1	程序框图
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328091547887.png" alt="image-20220328091547887" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120001153.png" alt="image-20231022120001153" style="zoom:80%;" />
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328091508434.png" alt="image-20220328091508434" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120006810.png" alt="image-20231022120006810" style="zoom:80%;" />
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328091616495.png" alt="image-20220328091616495" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120012611.png" alt="image-20231022120012611" style="zoom:80%;" />
 
 **: public**：公有继承，父类的**public**，在子类中也是**public**
 
 ### 2	源代码
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328092254182.png" alt="image-20220328092254182" style="zoom:80%;" />
-
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328092245699.png" alt="image-20220328092245699" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120030793.png" alt="image-20231022120030793" style="zoom:80%;" />
 
 ### 3	添加新的类型 VideoGame
 
-<img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20220328092234366.png" alt="image-20220328092234366" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120038981.png" alt="image-20231022120038981" style="zoom:80%;" />
 
 ## 例：Employee
 

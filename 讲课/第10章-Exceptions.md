@@ -109,7 +109,7 @@ void outer3() {
 }
 ```
 
-<img src="H:\Temp\Typora\image-20220516083503746.png" alt="image-20220516083503746" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120255377.png" alt="image-20231022120255377" style="zoom:80%;" />
 
 ### 10.2.3	总结
 
@@ -207,7 +207,7 @@ void func() {
 }
 ```
 
-<img src="H:\Temp\Typora\image-20220516090641635.png" alt="image-20220516090641635" style="zoom:80%;" />
+<img src="AssetMarkdown/image-20231022120306064.png" alt="image-20231022120306064" style="zoom:80%;" />
 
 ## 10.4	定义函数应该扔出的异常
 
@@ -299,10 +299,10 @@ void average() {
 
 ## 10.7	Exception的处理机制
 
-<img src="H:\Temp\Typora\image-20220523081602560.png" alt="image-20220523081602560"  />
+<img src="AssetMarkdown/image-20231022120315983.png" alt="image-20231022120315983" style="zoom:80%;" />
 
-<img src="H:\Temp\Typora\image-20220523081609165.png" alt="image-20220523081609165"  />
+<img src="AssetMarkdown/image-20231022120323052.png" alt="image-20231022120323052" style="zoom:80%;" />
 
-<img src="H:\Temp\Typora\image-20220523081615747.png" alt="image-20220523081615747"  />
+<img src="AssetMarkdown/image-20231022120333201.png" alt="image-20231022120333201" style="zoom:80%;" />
 
-<img src="H:\Temp\Typora\image-20220523081641782.png" alt="image-20220523081641782"  />
+<img src="AssetMarkdown/image-20231022120338768.png" alt="image-20231022120338768" style="zoom:80%;" />
