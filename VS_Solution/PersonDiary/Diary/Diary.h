@@ -4,6 +4,9 @@
 
 class Diary {
 public:
+	Diary() {}
+	Diary(const Date& date) : date(date) {}
+
 	/*
 	* @brief 从控制台读取日期
 	*/

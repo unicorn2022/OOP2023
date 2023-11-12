@@ -39,3 +39,5 @@ private:
 	int year, month, day;
 };
 
+static const Date DATE_MAX = Date(9999, 12, 31);
+static const Date DATE_MIN = Date(0, 1, 1);

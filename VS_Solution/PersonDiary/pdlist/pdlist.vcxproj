@@ -127,7 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Diary\Date.cpp" />
+    <ClCompile Include="..\Diary\Diary.cpp" />
+    <ClCompile Include="..\Diary\DiaryManager.cpp" />
     <ClCompile Include="pdlist.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Diary\Date.h" />
+    <ClInclude Include="..\Diary\Diary.h" />
+    <ClInclude Include="..\Diary\DiaryManager.h" />
+    <ClInclude Include="..\Diary\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

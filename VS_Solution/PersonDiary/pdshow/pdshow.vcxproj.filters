@@ -24,5 +24,28 @@
     <ClCompile Include="pdshow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\Diary\Date.cpp">
+      <Filter>源文件\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Diary\Diary.cpp">
+      <Filter>源文件\Diary</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Diary\DiaryManager.cpp">
+      <Filter>源文件\Diary</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Diary\Date.h">
+      <Filter>头文件\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Diary\Diary.h">
+      <Filter>头文件\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Diary\DiaryManager.h">
+      <Filter>头文件\Diary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Diary\Utils.h">
+      <Filter>头文件\Diary</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

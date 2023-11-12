@@ -4,23 +4,24 @@ using namespace std;
 
 bool Diary::input() {
 	if (date.input() == false)return false;
-	SetColor("Blue");
 	printf("请逐行输入日记的内容,以.或EOF结束\n");
 	string s;
 	getline(cin, s);
 	while (1) {
-		SetColor("Yellow");
+		SetColor(Color::Yellow);
 		printf("%2d:", (int)content.size() + 1);
-		SetColor("Red");
+		SetColor(Color::Red);
 		getline(cin, s);
-		cout << s << endl;
-		if (s == "")break;
-		if (s == ".")break;
+		if (s.empty())break;
+		if (s[0] == '.')break;
 		content.push_back(s);
 	}
-	content.push_back(".");
-	SetColor("Blue");
+	content.push_back(".\n");
+
+	SetColor(Color::Yellow);
 	printf("日记输入成功\n");
+	SetColor(Color::Clear);
+
 	return true;
 }
 
@@ -30,8 +31,8 @@ bool Diary::input(std::ifstream& fin) {
 	getline(fin, s);
 	while (1) {
 		getline(fin, s);
-		if (s == "")break;
-		if (s == ".")break;
+		if (s.empty())break;
+		if (s[0] == '.')break;
 		content.push_back(s);
 	}
 	content.push_back(".");
@@ -40,9 +41,9 @@ bool Diary::input(std::ifstream& fin) {
 
 void Diary::output() const {
 	date.output();
-	SetColor("Blue");
-	for (int i = 0; i < content.size(); i++)
+	for (int i = 0; i < content.size() - 1; i++)
 		cout << content[i] << endl;
+	cout << endl;
 }
 
 void Diary::output(std::ostream& fout) const {
