@@ -37,7 +37,7 @@ void DiaryManager::RemoveDiary(Date now) {
 }
 
 void DiaryManager::InputAllDiary() {
-	ifstream fin("C://Users//Admin//Desktop//diary.txt");
+	ifstream fin("diary.txt");
 	while (true) {
 		Diary tmp;
 		if (!tmp.input(fin)) break;
@@ -47,7 +47,7 @@ void DiaryManager::InputAllDiary() {
 }
 
 void DiaryManager::StoreDiary() {
-	ofstream fout("C://Users//Admin//Desktop//diary.txt", ios::out);
+	ofstream fout("diary.txt", ios::out);
 	for(auto it = diary.begin(); it != diary.end(); it++) {
 		it->output(fout);
 	}
