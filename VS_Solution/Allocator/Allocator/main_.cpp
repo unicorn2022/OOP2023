@@ -11,9 +11,9 @@
 //template <class T>
 //using MyAlloc = BasicAllocator<T>;
 
-//#include "BlockBufferPool.h"
-//template <class T>
-//using MyAlloc = BlockBufferPool<T>;
+#include "BlockBufferPool.h"
+template <class T>
+using MyAlloc = BlockBufferPool<T>;
 
 //#include "FreeListBufferPool.h"
 //template <class T>

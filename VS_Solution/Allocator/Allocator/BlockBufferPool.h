@@ -167,5 +167,5 @@ void BlockBufferPool<T, BlockSize>::deallocate(pointer p, size_type size) {
 	//printf("\033[33mdeallocate\033[0m p=%X, size=%d\n", (int)p, size);
 	if (p == nullptr)return;
 	// 将p指向的size大小的内存, 作为新的Block块放入current_Block中
-	//allocateBlock(reinterpret_cast<char*>(p), size);
+	allocateBlock(reinterpret_cast<char*>(p), size);
 }
