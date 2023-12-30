@@ -1,9 +1,16 @@
-//BasicAllocator: Ê¹ÓÃmalloc(), free()ÊµÏÖµÄallocator
+ï»¿//BasicAllocator: ä½¿ç”¨malloc(), free()å®ç°çš„allocator
 #pragma once
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include "SetColor.h"
 using namespace std;
+
+void FreeAll() {
+    SetConsoleColor(ConsoleColor::Cyan);
+    fprintf(stderr, "FreeAll\n");
+    SetConsoleColor(ConsoleColor::Clear);
+}
 
 template <typename T>
 class BasicAllocator{
@@ -23,7 +30,7 @@ public:
     };
 
 public:
-    // ·µ»ØvalµÄµØÖ·
+    // è¿”å›valçš„åœ°å€
     pointer address(reference val)const {
         return &val;
     }
@@ -35,20 +42,20 @@ public:
     
     void deallocate(pointer p, size_type n);
     
-    // ¿ÉÈİÄÉµÄ×î¶àÔªËØ
+    // å¯å®¹çº³çš„æœ€å¤šå…ƒç´ 
     size_type max_size() const throw() {
         return static_cast<size_type>(-1) / sizeof(value_type);
     }
     
-    // ÔÚµØÖ·pËùÖ¸ÏòµÄ¿Õ¼ä, Ê¹ÓÃval½øĞĞÌî³ä
-    // ĞèÒªÊ¹ÓÃµ½placement new, ÒÔ±é±£Ö¤µ÷ÓÃµ½¹¹Ôìº¯Êı
-    // placement new: ÔÚÓÃ»§Ö¸¶¨µÄÄÚ´æÎ»ÖÃÉÏ¹¹½¨ĞÂµÄ¶ÔÏó, ¹¹½¨¹ı³ÌÖĞ²»ĞèÒª¶îÍâ·ÖÅäÄÚ´æ, Ö»ĞèÒªµ÷ÓÃ¶ÔÏóµÄ¹¹Ôìº¯Êı 
+    // åœ¨åœ°å€pæ‰€æŒ‡å‘çš„ç©ºé—´, ä½¿ç”¨valè¿›è¡Œå¡«å……
+    // éœ€è¦ä½¿ç”¨åˆ°placement new, ä»¥éä¿è¯è°ƒç”¨åˆ°æ„é€ å‡½æ•°
+    // placement new: åœ¨ç”¨æˆ·æŒ‡å®šçš„å†…å­˜ä½ç½®ä¸Šæ„å»ºæ–°çš„å¯¹è±¡, æ„å»ºè¿‡ç¨‹ä¸­ä¸éœ€è¦é¢å¤–åˆ†é…å†…å­˜, åªéœ€è¦è°ƒç”¨å¯¹è±¡çš„æ„é€ å‡½æ•° 
     void construct(pointer p, const_reference val) {
         new (p) value_type(val);
     }
 
-    // Îö¹¹pÖ¸ÏòµÄÄÚ´æ¿éÖĞµÄÄÚÈİ
-    // Ò»°ãÍ¨¹ıÏÔÊ½µ÷ÓÃÎö¹¹º¯ÊıÀ´Ö´ĞĞ
+    // ææ„pæŒ‡å‘çš„å†…å­˜å—ä¸­çš„å†…å®¹
+    // ä¸€èˆ¬é€šè¿‡æ˜¾å¼è°ƒç”¨ææ„å‡½æ•°æ¥æ‰§è¡Œ
     void destory(pointer p) {
         p->~T();
     }
@@ -68,7 +75,7 @@ public:
     }
 };
 
-// ·ÖÅä¿Õ¼ä, ÀàËÆÓÚmalloc
+// åˆ†é…ç©ºé—´, ç±»ä¼¼äºmalloc
 template <typename T>
 typename BasicAllocator<T>::pointer
 BasicAllocator<T>::allocate(size_type cnt, char* pHint) {
@@ -80,7 +87,7 @@ BasicAllocator<T>::allocate(size_type cnt, char* pHint) {
     return static_cast<pointer>(pMem);
 }
 
-// ÊÍ·Å¿Õ¼ä, ÀàËÆÓÚfree
+// é‡Šæ”¾ç©ºé—´, ç±»ä¼¼äºfree
 template <typename T>
 void BasicAllocator<T>::deallocate(pointer p, size_type n) {
     free(p);

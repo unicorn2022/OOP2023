@@ -35,5 +35,8 @@
     <ClInclude Include="FreeListBufferPool.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SetColor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

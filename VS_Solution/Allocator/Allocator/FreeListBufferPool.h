@@ -1,9 +1,17 @@
-//FreeListBufferPool: ½èÖú16¸öfreelistÓÅ»¯µÄallocator
+ï»¿//FreeListBufferPool: å€ŸåŠ©16ä¸ªfreelistä¼˜åŒ–çš„allocator
 #pragma once
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include "SetColor.h"
 using namespace std;
+
+void FreeAll() {
+    SetConsoleColor(ConsoleColor::Cyan);
+    fprintf(stderr, "FreeAll\n");
+    SetConsoleColor(ConsoleColor::Clear);
+}
+
 template <typename T>
 class FreeListBufferPool {
 public:
@@ -22,7 +30,7 @@ public:
     };
 
 public:
-    // ·µ»ØvalµÄµØÖ·
+    // è¿”å›valçš„åœ°å€
     pointer address(reference val)const {
         return &val;
     }
@@ -34,20 +42,20 @@ public:
 
     void deallocate(pointer p, size_type n);
 
-    // ¿ÉÈİÄÉµÄ×î¶àÔªËØ
+    // å¯å®¹çº³çš„æœ€å¤šå…ƒç´ 
     size_type max_size() const throw() {
         return static_cast<size_type>(-1) / sizeof(value_type);
     }
 
-    // ÔÚµØÖ·pËùÖ¸ÏòµÄ¿Õ¼ä, Ê¹ÓÃval½øĞĞÌî³ä
-    // ĞèÒªÊ¹ÓÃµ½placement new, ÒÔ±é±£Ö¤µ÷ÓÃµ½¹¹Ôìº¯Êı
-    // placement new: ÔÚÓÃ»§Ö¸¶¨µÄÄÚ´æÎ»ÖÃÉÏ¹¹½¨ĞÂµÄ¶ÔÏó, ¹¹½¨¹ı³ÌÖĞ²»ĞèÒª¶îÍâ·ÖÅäÄÚ´æ, Ö»ĞèÒªµ÷ÓÃ¶ÔÏóµÄ¹¹Ôìº¯Êı 
+    // åœ¨åœ°å€pæ‰€æŒ‡å‘çš„ç©ºé—´, ä½¿ç”¨valè¿›è¡Œå¡«å……
+    // éœ€è¦ä½¿ç”¨åˆ°placement new, ä»¥éä¿è¯è°ƒç”¨åˆ°æ„é€ å‡½æ•°
+    // placement new: åœ¨ç”¨æˆ·æŒ‡å®šçš„å†…å­˜ä½ç½®ä¸Šæ„å»ºæ–°çš„å¯¹è±¡, æ„å»ºè¿‡ç¨‹ä¸­ä¸éœ€è¦é¢å¤–åˆ†é…å†…å­˜, åªéœ€è¦è°ƒç”¨å¯¹è±¡çš„æ„é€ å‡½æ•° 
     void construct(pointer p, const_reference val) {
         new (p) value_type(val);
     }
 
-    // Îö¹¹pÖ¸ÏòµÄÄÚ´æ¿éÖĞµÄÄÚÈİ
-    // Ò»°ãÍ¨¹ıÏÔÊ½µ÷ÓÃÎö¹¹º¯ÊıÀ´Ö´ĞĞ
+    // ææ„pæŒ‡å‘çš„å†…å­˜å—ä¸­çš„å†…å®¹
+    // ä¸€èˆ¬é€šè¿‡æ˜¾å¼è°ƒç”¨ææ„å‡½æ•°æ¥æ‰§è¡Œ
     void destory(pointer p) {
         p->~T();
     }
@@ -67,41 +75,41 @@ public:
     }
 };
 
-const int ALIGN = 8;        //Ğ¡ĞÍÇø¿é¶ÔÓ¦µÄ´óĞ¡Îª8µÄ±¶Êı
-const int MAX_MEMORY = 128; // Ğ¡ĞÍÇø¿é×î´óÎª128B
-const int CNT_OF_LIST = MAX_MEMORY / ALIGN; //free-listsÒ»¹²ÓĞ16¸ö
+const int ALIGN = 8;        //å°å‹åŒºå—å¯¹åº”çš„å¤§å°ä¸º8çš„å€æ•°
+const int MAX_MEMORY = 128; // å°å‹åŒºå—æœ€å¤§ä¸º128B
+const int CNT_OF_LIST = MAX_MEMORY / ALIGN; //free-listsä¸€å…±æœ‰16ä¸ª
 
-//½«sizeÉÏµ÷ÎªALIGNµÄ±¶Êı
+//å°†sizeä¸Šè°ƒä¸ºALIGNçš„å€æ•°
 static size_t convert_size_to_size(size_t size) {
     return (size + ALIGN - 1) & ~(ALIGN - 1);
 }
 
-//¸ù¾İsize´óĞ¡ÅĞ¶Ïµ±Ç°Çø¿éÊôÓÚÄÄ¸öFreeList
+//æ ¹æ®sizeå¤§å°åˆ¤æ–­å½“å‰åŒºå—å±äºå“ªä¸ªFreeList
 static size_t convert_size_to_index(size_t size) {
     return (size + ALIGN - 1) / ALIGN - 1;
 }
 
 union Block {
-    union Block* next; // Free_ListÁ´±íÖ¸ÏòµÄÏÂÒ»¿éÄÚ´æ
-    char  data;        // µ±Ç°ÄÚ´æ´æ·ÅµÄÊı¾İ
+    union Block* next; // Free_Listé“¾è¡¨æŒ‡å‘çš„ä¸‹ä¸€å—å†…å­˜
+    char  data;        // å½“å‰å†…å­˜å­˜æ”¾çš„æ•°æ®
 };
 Block* Free_List[CNT_OF_LIST];
-char* start_free = nullptr;   // ÄÚ´æ³Ø¿ªÊ¼µØÖ·
-char* end_free = nullptr;     // ÄÚ´æ³Ø½áÊøµØÖ·
-size_t heap_size;             // ÄÚ´æ³ØµÄ´óĞ¡ 
-//´ÓÄÚ´æ³ØÖĞ·ÖÅäsize*n´óĞ¡µÄ¿Õ¼ä
+char* start_free = nullptr;   // å†…å­˜æ± å¼€å§‹åœ°å€
+char* end_free = nullptr;     // å†…å­˜æ± ç»“æŸåœ°å€
+size_t heap_size;             // å†…å­˜æ± çš„å¤§å° 
+//ä»å†…å­˜æ± ä¸­åˆ†é…size*nå¤§å°çš„ç©ºé—´
 char* chunk_alloc(size_t size, int& n) {
     size_t total_size = n * size;
     size_t bytes_left = end_free - start_free;
 
-    // ÄÚ´æ³ØÊ£Óà¿Õ¼äÍêÈ«Âú×ãĞèÇó
+    // å†…å­˜æ± å‰©ä½™ç©ºé—´å®Œå…¨æ»¡è¶³éœ€æ±‚
     if (bytes_left >= total_size) {
         char* ans = start_free;
         start_free += total_size;
         return ans;
     }
 
-    // ÄÚ´æ³ØÊ£Óà¿Õ¼ä²»ÄÜÍêÈ«Âú×ãĞèÇó, µ«ÖÁÉÙÄÜ·ÖÅäÒ»¸ö¿é
+    // å†…å­˜æ± å‰©ä½™ç©ºé—´ä¸èƒ½å®Œå…¨æ»¡è¶³éœ€æ±‚, ä½†è‡³å°‘èƒ½åˆ†é…ä¸€ä¸ªå—
     else if (bytes_left >= size) {
         n = bytes_left / size;
         total_size = n * size;
@@ -110,9 +118,9 @@ char* chunk_alloc(size_t size, int& n) {
         return ans;
     }
 
-    // ÄÚ´æ³ØÊ£Óà¿Õ¼äÎŞ·¨·ÖÅäÒ»¸öÇø¿é
+    // å†…å­˜æ± å‰©ä½™ç©ºé—´æ— æ³•åˆ†é…ä¸€ä¸ªåŒºå—
     else {
-        // ÏÈ½«ÄÚ´æ³ØÖĞÊ£ÓàµÄ¿Õ¼ä·ÖÅä¸øÊÊµ±µÄFree_List
+        // å…ˆå°†å†…å­˜æ± ä¸­å‰©ä½™çš„ç©ºé—´åˆ†é…ç»™é€‚å½“çš„Free_List
         if (bytes_left > 0) {
             int index = convert_size_to_index(bytes_left);
             reinterpret_cast<Block*>(start_free)->next = Free_List[index];
@@ -122,46 +130,46 @@ char* chunk_alloc(size_t size, int& n) {
         size_t bytes_to_get = 2 * total_size + convert_size_to_size(heap_size >> 4);
         start_free = (char*)malloc(bytes_to_get);
 
-        // ¶Ñ¿Õ¼ä²»×ã, mallocÊ§°Ü
+        // å †ç©ºé—´ä¸è¶³, mallocå¤±è´¥
         if (start_free == nullptr) {
-            // ¼ì²éµ±Ç°Free_List, ¿´ÊÇ·ñÓĞ±Èsize´óµÄ¿ÕÏĞ¿Õ¼ä, ²¢½«Æä·ÖÁÑ
+            // æ£€æŸ¥å½“å‰Free_List, çœ‹æ˜¯å¦æœ‰æ¯”sizeå¤§çš„ç©ºé—²ç©ºé—´, å¹¶å°†å…¶åˆ†è£‚
             for (int i = size; i <= MAX_MEMORY; i += ALIGN) {
                 int index = convert_size_to_index(i);
                 Block* now = Free_List[index];
                 if (now != nullptr) {
                     Free_List[index] = now->next;
-                    // ½«µ±Ç°µÄ¿Õ¼ä·ÅÈëÄÚ´æ³Ø
+                    // å°†å½“å‰çš„ç©ºé—´æ”¾å…¥å†…å­˜æ± 
                     start_free = reinterpret_cast<char*>(now);
                     end_free = start_free + i;
-                    // µİ¹éµ÷ÓÃchunk_alloc, ½øĞĞÖØĞÂ·ÖÅä
+                    // é€’å½’è°ƒç”¨chunk_alloc, è¿›è¡Œé‡æ–°åˆ†é…
                     return chunk_alloc(size, n);
                 }
             }
-            // Free_ListÖĞÒ²Ã»ÓĞ¿ÕÓà¿Õ¼ä, ¿ÉÒÔ·ÅÆúÖÎÁÆÁË
+            // Free_Listä¸­ä¹Ÿæ²¡æœ‰ç©ºä½™ç©ºé—´, å¯ä»¥æ”¾å¼ƒæ²»ç–—äº†
             throw bad_alloc();
         }
 
-        // malloc³É¹¦
+        // mallocæˆåŠŸ
         heap_size += bytes_to_get;
         end_free = start_free + bytes_to_get;
-        // µİ¹éµ÷ÓÃ×Ô¼º, ·ÖÅämallocµ½µÄÄÚ´æ, ĞŞ¸Än
+        // é€’å½’è°ƒç”¨è‡ªå·±, åˆ†é…mallocåˆ°çš„å†…å­˜, ä¿®æ”¹n
         return chunk_alloc(size, n);
     }
 }
-//Ìî³ä´óĞ¡ÎªsizeµÄ¿ÕÏĞÁ´±í
+//å¡«å……å¤§å°ä¸ºsizeçš„ç©ºé—²é“¾è¡¨
 void* refill(size_t size) {
     int n = 20;
-    // ³¢ÊÔÉêÇën*sizeµÄ¿Õ¼ä
+    // å°è¯•ç”³è¯·n*sizeçš„ç©ºé—´
     char* chunk = chunk_alloc(size, n);
     
-    // Èç¹ûÖ»ÄÜÉêÇëµ½1*sizeµÄ¿Õ¼ä, ÔòÖ±½Ó·ÖÅä¸øµ÷ÓÃÕß, Free_ListÃ»ÓĞĞÂ½Úµã
+    // å¦‚æœåªèƒ½ç”³è¯·åˆ°1*sizeçš„ç©ºé—´, åˆ™ç›´æ¥åˆ†é…ç»™è°ƒç”¨è€…, Free_Listæ²¡æœ‰æ–°èŠ‚ç‚¹
     if (n == 1)return reinterpret_cast<void*>(chunk);
 
-    // ÉêÇëµ½>=2*sizeµÄ¿Õ¼ä
+    // ç”³è¯·åˆ°>=2*sizeçš„ç©ºé—´
     int index = convert_size_to_index(size);
-    // ½«µÚ0¿é·ÖÅä¸øµ÷ÓÃÕß
+    // å°†ç¬¬0å—åˆ†é…ç»™è°ƒç”¨è€…
     Block* ans = reinterpret_cast<Block*>(chunk);
-    // ½«µÚ1~n-1¿é¿Õ¼ä·Åµ½Free_ListÖĞ
+    // å°†ç¬¬1~n-1å—ç©ºé—´æ”¾åˆ°Free_Listä¸­
     Block* now_Block = nullptr;
     Block* next_Block = reinterpret_cast<Block*>(chunk + size);
     Free_List[index] = next_Block;
@@ -179,38 +187,38 @@ void* refill(size_t size) {
     return reinterpret_cast<void*>(ans);
 }
 
-// ·ÖÅä¿Õ¼ä, ÀàËÆÓÚmalloc
+// åˆ†é…ç©ºé—´, ç±»ä¼¼äºmalloc
 template <typename T>
 typename FreeListBufferPool<T>::pointer
 FreeListBufferPool<T>::allocate(size_type cnt, char* pHint) {
     int size = cnt * sizeof(value_type);
-    // ´óÓÚMAX_MEMORY, Ö±½ÓÓÃmalloc·ÖÅäÄÚ´æ
+    // å¤§äºMAX_MEMORY, ç›´æ¥ç”¨mallocåˆ†é…å†…å­˜
     if (size > MAX_MEMORY) {
         return reinterpret_cast<pointer>(malloc(size));
     }
 
     int index = convert_size_to_index(size);
     Block* now = Free_List[index];
-    // Á´±íÖĞÎŞ¿ÕÏĞ¿Õ¼ä, µ÷ÓÃrefillÉêÇëÒ»¿éÄÚ´æ
+    // é“¾è¡¨ä¸­æ— ç©ºé—²ç©ºé—´, è°ƒç”¨refillç”³è¯·ä¸€å—å†…å­˜
     if (now == nullptr) {
         void* ans = refill(convert_size_to_size(size));
         return reinterpret_cast<pointer>(ans);
     }
-    // Á´±íÖĞÓĞ¿ÕÏĞ¿Õ¼ä, Ö±½Ó·µ»Ø
+    // é“¾è¡¨ä¸­æœ‰ç©ºé—²ç©ºé—´, ç›´æ¥è¿”å›
     Free_List[index] = Free_List[index]->next;
     return reinterpret_cast<pointer>(now);
 }
 
-// ÊÍ·Å¿Õ¼ä, ÀàËÆÓÚfree
+// é‡Šæ”¾ç©ºé—´, ç±»ä¼¼äºfree
 template <typename T>
 void FreeListBufferPool<T>::deallocate(pointer p, size_type n) {
     int size = n * sizeof(value_type);
-    // ´óÓÚMAX_MEMORY, Ö±½ÓÓÃfreeÊÍ·ÅÄÚ´æ
+    // å¤§äºMAX_MEMORY, ç›´æ¥ç”¨freeé‡Šæ”¾å†…å­˜
     if (size > MAX_MEMORY) {
         free(p);
         return;
     }
-    // ½«p¶ÔÓ¦µÄÄÚ´æ·Åµ½Free_ListÖĞ
+    // å°†på¯¹åº”çš„å†…å­˜æ”¾åˆ°Free_Listä¸­
     int index = convert_size_to_index(size);
     Block* now = reinterpret_cast<Block*>(p);
     now->next = Free_List[index];

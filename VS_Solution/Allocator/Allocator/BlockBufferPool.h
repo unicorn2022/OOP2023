@@ -1,21 +1,22 @@
-//BlockBufferPool: Ê¹ÓÃÄÚ´æ³Ø²ßÂÔÊµÏÖµÄallocator
+ï»¿//BlockBufferPool: ä½¿ç”¨å†…å­˜æ± ç­–ç•¥å®ç°çš„allocator
 #pragma once
 #include <cstdio>
 #include <cstring>
 #include <iostream>
 #include <climits>
 #include <cstddef>
+#include "SetColor.h"
 using namespace std;
 
-// ÄÚ´æ³Ø, ÒÔBlockÎªµ¥Î»
+// å†…å­˜æ± , ä»¥Blockä¸ºå•ä½
 struct Block {
-	char* start_address; // µ±Ç°BlockµÄÆğÊ¼µØÖ·
-	bool  isAllocate;	 // ±íÃ÷µ±Ç°BlockÊÇ·ñÊÇÍ¨¹ıallocate·ÖÅäµÄ
-	char* now_address;	 // µ±Ç°BlockÊ£Óà¿Õ¼äµÄµØÖ·
-	int last_size;		 // µ±Ç°BlockÊ£ÓàµÄ¿Õ¼ä
-	Block* next;		 // BlockÁ´±íµÄÏÂÒ»¸öÔªËØ
+	char* start_address; // å½“å‰Blockçš„èµ·å§‹åœ°å€
+	bool  isAllocate;	 // è¡¨æ˜å½“å‰Blockæ˜¯å¦æ˜¯é€šè¿‡allocateåˆ†é…çš„
+	char* now_address;	 // å½“å‰Blockå‰©ä½™ç©ºé—´çš„åœ°å€
+	int last_size;		 // å½“å‰Blockå‰©ä½™çš„ç©ºé—´
+	Block* next;		 // Blocké“¾è¡¨çš„ä¸‹ä¸€ä¸ªå…ƒç´ 
 }; 
-Block* current_Block; // ÄÚ´æ¿éÁ´±íµÄÍ·Ö¸Õë;
+Block* current_Block; // å†…å­˜å—é“¾è¡¨çš„å¤´æŒ‡é’ˆ;
 
 void FreeAll() {
 	Block* now = current_Block;
@@ -26,6 +27,10 @@ void FreeAll() {
 		now = next;
 	}
 	current_Block = nullptr;
+
+	SetConsoleColor(ConsoleColor::Cyan);
+	fprintf(stderr, "FreeAll\n");
+	SetConsoleColor(ConsoleColor::Clear);
 }
 
 template <typename T, size_t BlockSize = 4096>
@@ -49,7 +54,7 @@ private:
 	Block* allocateBlock(char* p = nullptr, int size = BlockSize);
 
 public:
-	// ·µ»ØvalµÄµØÖ·
+	// è¿”å›valçš„åœ°å€
 	pointer address(reference val)const {
 		return &val;
 	}
@@ -61,20 +66,20 @@ public:
 	void deallocate(pointer p, size_type size);
 
 	
-	// ¿ÉÈİÄÉµÄ×î¶àÔªËØ
+	// å¯å®¹çº³çš„æœ€å¤šå…ƒç´ 
 	size_type max_size() const throw() {
 		return static_cast<size_type>(-1) / sizeof(value_type);
 	}
 	
-	// ÔÚµØÖ·pËùÖ¸ÏòµÄ¿Õ¼ä, Ê¹ÓÃval½øĞĞÌî³ä
-	// ĞèÒªÊ¹ÓÃµ½placement new, ÒÔ±é±£Ö¤µ÷ÓÃµ½¹¹Ôìº¯Êı
-	// placement new: ÔÚÓÃ»§Ö¸¶¨µÄÄÚ´æÎ»ÖÃÉÏ¹¹½¨ĞÂµÄ¶ÔÏó, ¹¹½¨¹ı³ÌÖĞ²»ĞèÒª¶îÍâ·ÖÅäÄÚ´æ, Ö»ĞèÒªµ÷ÓÃ¶ÔÏóµÄ¹¹Ôìº¯Êı
+	// åœ¨åœ°å€pæ‰€æŒ‡å‘çš„ç©ºé—´, ä½¿ç”¨valè¿›è¡Œå¡«å……
+	// éœ€è¦ä½¿ç”¨åˆ°placement new, ä»¥éä¿è¯è°ƒç”¨åˆ°æ„é€ å‡½æ•°
+	// placement new: åœ¨ç”¨æˆ·æŒ‡å®šçš„å†…å­˜ä½ç½®ä¸Šæ„å»ºæ–°çš„å¯¹è±¡, æ„å»ºè¿‡ç¨‹ä¸­ä¸éœ€è¦é¢å¤–åˆ†é…å†…å­˜, åªéœ€è¦è°ƒç”¨å¯¹è±¡çš„æ„é€ å‡½æ•°
 	void construct(pointer p, const_reference val) {
 		new (p) value_type(val);
 	}
 
-	// Îö¹¹pÖ¸ÏòµÄÄÚ´æ¿éÖĞµÄÄÚÈİ
-	// Ò»°ãÍ¨¹ıÏÔÊ½µ÷ÓÃÎö¹¹º¯ÊıÀ´Ö´ĞĞ
+	// ææ„pæŒ‡å‘çš„å†…å­˜å—ä¸­çš„å†…å®¹
+	// ä¸€èˆ¬é€šè¿‡æ˜¾å¼è°ƒç”¨ææ„å‡½æ•°æ¥æ‰§è¡Œ
 	void destory(pointer p) {
 		p->~value_type();
 	}
@@ -94,10 +99,10 @@ public:
 	}
 };
 
-// ĞÂ½¨ÄÚ´æ¿é, ²¢½«Æä·ÅÈëÄÚ´æ¿éÁ´±íÖĞ
-// µ±p==NULLµÄÊ±ºò, ±íÊ¾ĞèÒªÉêÇëÒ»¿é´óĞ¡ÎªsizeµÄÄÚ´æ
-// µ±p!=NULLµÄÊ±ºò, ±íÊ¾ÏÖÔÚÒªÊÍ·ÅÄÚ´æ, ½«pÖ¸ÏòµÄ´óĞ¡ÎªsizeµÄÄÚ´æ·ÅÈë¿ÉÓÃÁĞ±íÖĞ
-// ·µ»Øµ±Ç°ÄÚ´æ¿éµÄµØÖ·
+// æ–°å»ºå†…å­˜å—, å¹¶å°†å…¶æ”¾å…¥å†…å­˜å—é“¾è¡¨ä¸­
+// å½“p==NULLçš„æ—¶å€™, è¡¨ç¤ºéœ€è¦ç”³è¯·ä¸€å—å¤§å°ä¸ºsizeçš„å†…å­˜
+// å½“p!=NULLçš„æ—¶å€™, è¡¨ç¤ºç°åœ¨è¦é‡Šæ”¾å†…å­˜, å°†pæŒ‡å‘çš„å¤§å°ä¸ºsizeçš„å†…å­˜æ”¾å…¥å¯ç”¨åˆ—è¡¨ä¸­
+// è¿”å›å½“å‰å†…å­˜å—çš„åœ°å€
 template <typename T, size_t BlockSize>
 Block* BlockBufferPool<T, BlockSize>::allocateBlock(char* p, int size) {
 	//printf("\033[31mallocateBlock\033[0m p=%X, size=%d\n", (int)p, size);
@@ -106,12 +111,12 @@ Block* BlockBufferPool<T, BlockSize>::allocateBlock(char* p, int size) {
 		cout << "new Block() error\n";
 		throw std::bad_alloc();
 	}
-	// ÉêÇëÒ»¿éĞÂµÄÄÚ´æ
+	// ç”³è¯·ä¸€å—æ–°çš„å†…å­˜
 	if (p == nullptr) {
 		p = reinterpret_cast<char*>(malloc(size));
 		now->isAllocate = true;
 	}
-	// deallocateÊÍ·ÅµôµÄÄÚ´æ
+	// deallocateé‡Šæ”¾æ‰çš„å†…å­˜
 	else {
 		now->isAllocate = false;
 	}
@@ -123,17 +128,16 @@ Block* BlockBufferPool<T, BlockSize>::allocateBlock(char* p, int size) {
 	return now;
 }
 
-// ·ÖÅäcnt¸öÔªËØ, ÀàËÆÓÚmalloc
+// åˆ†é…cntä¸ªå…ƒç´ , ç±»ä¼¼äºmalloc
 template <typename T, size_t BlockSize>
 typename BlockBufferPool<T, BlockSize>::pointer
 BlockBufferPool<T, BlockSize>::allocate(size_type cnt, const_pointer pHint) {
 	if (cnt <= 0)return nullptr;
-	//printf("\033[32mallocate\033[0m cnt=%d\n", cnt);
 	size_t num = cnt * sizeof(value_type);
 	pointer ans = nullptr;
 	Block* now = nullptr;
 
-	// ´ı·ÖÅäµÄÄÚ´æ±ÈÒ»¸öBlock´ó, ÔòÖ±½Óµ÷ÓÃmalloc·ÖÅäÄÚ´æ
+	// å¾…åˆ†é…çš„å†…å­˜æ¯”ä¸€ä¸ªBlockå¤§, åˆ™ç›´æ¥è°ƒç”¨mallocåˆ†é…å†…å­˜
 	if (num > BlockSize) {
 		now = allocateBlock(nullptr, num);
 		ans = reinterpret_cast<pointer>(now->start_address);
@@ -142,7 +146,7 @@ BlockBufferPool<T, BlockSize>::allocate(size_type cnt, const_pointer pHint) {
 		return ans;
 	}
 
-	// ±éÀúcurrent_Block, ÅĞ¶ÏÊÇ·ñÓĞBlock¿éÄÜ¹»·ÅÈëÊı¾İ
+	// éå†current_Block, åˆ¤æ–­æ˜¯å¦æœ‰Blockå—èƒ½å¤Ÿæ”¾å…¥æ•°æ®
 	//if (current_Block == nullptr)printf("\033[31m------current_Block is empty\n\033[0m");
 	//else printf("------current_Block fist size is %d\n", current_Block->last_size);
 	now = current_Block;
@@ -151,21 +155,32 @@ BlockBufferPool<T, BlockSize>::allocate(size_type cnt, const_pointer pHint) {
 		else break;
 	}
 	//printf("allocate cnt=%d num=%d\n", cnt, num);
-	// ÏÖÓĞµÄBlock¶¼·Å²»½øÈ¥, ÔòÖØĞÂÉêÇëÒ»¿éÄÚ´æ
+	// ç°æœ‰çš„Blockéƒ½æ”¾ä¸è¿›å», åˆ™é‡æ–°ç”³è¯·ä¸€å—å†…å­˜
 	if (now == nullptr) now = allocateBlock(nullptr, BlockSize);
 
-	// ½«µ±Ç°ÔªËØ·ÅÈënowÖ¸ÏòµÄBlockÖĞ
+	// å°†å½“å‰å…ƒç´ æ”¾å…¥nowæŒ‡å‘çš„Blockä¸­
 	ans = reinterpret_cast<pointer>(now->now_address);
 	now->now_address += num;
 	now->last_size -= num;
+
+
+	SetConsoleColor(ConsoleColor::Green);
+	fprintf(stderr, "allocate: ");
+	SetConsoleColor(ConsoleColor::Clear);
+	fprintf(stderr, "addr=%X cnt=%d\n", ans, cnt);
+
 	return ans;
 }
 
-// ÊÍ·Å¿Õ¼ä, ÀàËÆÓÚfree
+// é‡Šæ”¾ç©ºé—´, ç±»ä¼¼äºfree
 template <typename T, size_t BlockSize>
 void BlockBufferPool<T, BlockSize>::deallocate(pointer p, size_type size) {
-	//printf("\033[33mdeallocate\033[0m p=%X, size=%d\n", (int)p, size);
 	if (p == nullptr)return;
-	// ½«pÖ¸ÏòµÄsize´óĞ¡µÄÄÚ´æ, ×÷ÎªĞÂµÄBlock¿é·ÅÈëcurrent_BlockÖĞ
+	// å°†pæŒ‡å‘çš„sizeå¤§å°çš„å†…å­˜, ä½œä¸ºæ–°çš„Blockå—æ”¾å…¥current_Blockä¸­
 	allocateBlock(reinterpret_cast<char*>(p), size);
+
+	SetConsoleColor(ConsoleColor::Yellow);
+	fprintf(stderr, "deallocate: ");
+	SetConsoleColor(ConsoleColor::Clear);
+	fprintf(stderr, "addr=%X, size=%d\n", (int)p, size);
 }
