@@ -18,9 +18,17 @@ const bool Debug = false;
 //template <class T>
 //using MyAlloc = BlockBufferPool<T>;
 
-#include "FreeListBufferPool.h"
+//#include "FreeListBufferPool.h"
+//template <class T>
+//using MyAlloc = FreeListBufferPool<T>;
+
+//#include "myallocator.hpp"
+//template <class T>
+//using MyAlloc = MemoryPool<T>;
+
+#include "allocator.h"
 template <class T>
-using MyAlloc = FreeListBufferPool<T>;
+using MyAlloc = MAllocator<T>;
 
 const int TestSize = 10000;
 const int PickSize = 1000;
@@ -30,6 +38,7 @@ using standard = std::allocator<T>;
 using Point2D = std::pair<int, int>;
 
 void Work() {
+	std::cout << "-----------------------------------Work-----------------------------------\n";
 	clock_t start = clock();
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -90,10 +99,12 @@ void Work() {
 			std::cout << "incorrect assignment in vecpts: " << idx1 << std::endl;
 	}
 	std::cout << "Allocator with memory pool cost: " << (clock() - start) * 1.0 / CLOCKS_PER_SEC << " seconds" << std::endl;
+	std::cout << "--------------------------------------------------------------------------\n";
 }
 
 
 void Work_STD() {
+	std::cout << "-----------------------------------Work_STD-----------------------------------\n";
 	clock_t start = clock();
 	std::random_device rd;
 	std::mt19937 gen(rd());
@@ -153,13 +164,17 @@ void Work_STD() {
 			std::cout << "incorrect assignment in vecpts: " << idx1 << std::endl;
 	}
 	std::cout << "Allocator with memory pool cost: " << (clock() - start) * 1.0 / CLOCKS_PER_SEC << " seconds" << std::endl;
+	std::cout << "--------------------------------------------------------------------------\n";
 }
 
 int main() {
+	std::cout << "Work Start\n";
 	Work();
-	std::cout << "\n\n";
+	std::cout << "Work End\n";
+
+	std::cout << "Work STD Start\n";
 	Work_STD();
-	FreeAll();
+	std::cout << "Work End\n";
 
 	return 0;
 }

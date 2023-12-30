@@ -22,12 +22,16 @@
     <ClCompile Include="main_.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="allocator.h" />
     <ClInclude Include="BasicAllocator.h" />
     <ClInclude Include="BlockBufferPool.h" />
     <ClInclude Include="DiverseBlockBufferPool.h" />
     <ClInclude Include="FreeListBufferPool.h" />
-    <ClInclude Include="myalloc_.h" />
+    <ClInclude Include="myallocator.h" />
     <ClInclude Include="SetColor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="myallocator.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
